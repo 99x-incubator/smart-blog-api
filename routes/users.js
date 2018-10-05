@@ -1,14 +1,23 @@
 var express = require('express');
+var stellar = require('../controllers/stellar/createAccount');
+var stellarBalance = require('../controllers/stellar/getBalance');
 var router = express.Router();
 var User = require('../models/user');
+var createAccount = require('../controllers/stellar/createAccount');
 
 router.post('/signup', function(req, res, next){
+
+  //steller keys generation
+  createAccount.createAccount(function(req, res){
+    const stellerPublicKey = res.publicKey;
+  });
+
   var user = new User({
     firstName: req.body.fname,
     lastName: req.body.lname,
     email: req.body.email,
     password: req.body.password,
-    publicKey: req.body.publickey,
+    publicKey: stellerPublicKey,
     creation_dt: Date.now()
   });
 
@@ -23,5 +32,8 @@ router.post('/signup', function(req, res, next){
   })
 
 });
+
+router.get('/createacc', stellar.createAccount);
+router.get('/balance/:publicKey', stellarBalance.getBalance);
 
 module.exports = router;
