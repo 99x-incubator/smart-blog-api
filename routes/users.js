@@ -6,16 +6,16 @@ var User = require('../models/user');
 
 router.post('/signup', function(req, res, next){
 
-    let accPromise = stellar.createAccount();
+    // let accPromise = stellar.createAccount();
 
-    accPromise.then(function(key){
+    // accPromise.then(function(key){
 
       var user = new User({
         firstName: req.body.fname,
         lastName: req.body.lname,
         email: req.body.email,
         password: req.body.password,
-        publicKey: key.publickey,
+        publicKey: "xnsd48383bnsnsmms92828tdbvsz",
         creation_dt: Date.now()
       });
     
@@ -29,10 +29,10 @@ router.post('/signup', function(req, res, next){
         return res.status(501).json({message: 'Error registering user.'})
       })
       
-    })
-    promise.catch(function(err){
-      console.log("error in getting keys from steller");
-    })
+    // })
+    // promise.catch(function(err){
+    //   console.log("error in getting keys from steller");
+    // })
 
     
   
