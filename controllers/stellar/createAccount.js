@@ -5,6 +5,7 @@ var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 exports.createAccount = function(req, res, next){
 
     var pair = StellarSdk.Keypair.random();
+    
     pair.secret();
     console.log(pair.secret());
     pair.publicKey();
@@ -68,10 +69,10 @@ exports.createAccount = function(req, res, next){
                 });
         }
     });
-
-    res.send({
+    return {
         "secretKey" : pair.secret(),
         "publicKey" : pair.publicKey(),
-    });
+    };
+
 }
 
