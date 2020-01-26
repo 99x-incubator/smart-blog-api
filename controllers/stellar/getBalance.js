@@ -1,6 +1,5 @@
 var StellarSdk = require('stellar-sdk');
 StellarSdk.Network.useTestNetwork();
-var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
 exports.getBalance = function (req, res, next) {
     var publicKey = req.params.publicKey
@@ -18,7 +17,6 @@ exports.getBalance = function (req, res, next) {
                 Balance: balance.balance
             });
         });
-        console.log(arr)
         res.send({
         "publicKey": publicKey,
         "assets": arr

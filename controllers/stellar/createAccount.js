@@ -7,7 +7,6 @@ exports.createAccount = function(req, res, next){
     var pair = StellarSdk.Keypair.random();
     
     pair.secret();
-    console.log(pair.secret());
     pair.publicKey();
     var request = require('request');
     request.get({
@@ -31,8 +30,6 @@ exports.createAccount = function(req, res, next){
             var issuingKeys = StellarSdk.Keypair
                 .fromSecret('SCKL62GED46Z6ZXN7IBPQX43KNSQOI62XD7DKNW4FDFYZQUPQZRTHFBV');
             var receivingKeys = pair;
-            // var receivingKeys = StellarSdk.Keypair
-            //   .fromSecret('SDNW4TVMRPTO7NPSBYHYA2ESHOWQLQLOVDN3AKW6Q65YOVT7DIC3KYPO');
             // Create an object to represent the new asset
             var Blog = new StellarSdk.Asset('Blog', issuingKeys.publicKey());
             // First, the receiving account must trust the asset
