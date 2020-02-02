@@ -20,7 +20,6 @@ exports.createAccount = function(req, res, next){
         }
         else {
             console.log('SUCCESS! You have a new account :)\n', body);
-            // the JS SDK uses promises for most actions, such as retrieving an account
             server.loadAccount(pair.publicKey()).then(function (account) {
                 console.log('Balances for account: ' + pair.publicKey());
                 account.balances.forEach(function (balance) {
@@ -31,15 +30,11 @@ exports.createAccount = function(req, res, next){
             var issuingKeys = StellarSdk.Keypair
                 .fromSecret('SCKL62GED46Z6ZXN7IBPQX43KNSQOI62XD7DKNW4FDFYZQUPQZRTHFBV');
             var receivingKeys = pair;
-            // var receivingKeys = StellarSdk.Keypair
-            //   .fromSecret('SDNW4TVMRPTO7NPSBYHYA2ESHOWQLQLOVDN3AKW6Q65YOVT7DIC3KYPO');
-            // Create an object to represent the new asset
             var Blog = new StellarSdk.Asset('Blog', issuingKeys.publicKey());
             // First, the receiving account must trust the asset
             server.loadAccount(receivingKeys.publicKey())
                 .then(function (receiver) {
                     var transaction = new StellarSdk.TransactionBuilder(receiver)
-                        // The `changeTrust` operation creates (or alters) a trustline
                         // The `limit` parameter below is optional
                         .addOperation(StellarSdk.Operation.changeTrust({
                             asset: Blog,
@@ -49,7 +44,6 @@ exports.createAccount = function(req, res, next){
                     transaction.sign(receivingKeys);
                     return server.submitTransaction(transaction);
                 })
-                // Second, the issuing account actually sends a payment using the asset
                 .then(function () {
                     return server.loadAccount(issuingKeys.publicKey());
                 })
