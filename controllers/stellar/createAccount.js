@@ -7,7 +7,6 @@ exports.createAccount = function(){
     var pair = StellarSdk.Keypair.random();
     
     pair.secret();
-    console.log(pair.secret());
     pair.publicKey();
     var request = require('request');
     request.get({

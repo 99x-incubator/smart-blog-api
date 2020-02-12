@@ -17,7 +17,6 @@ exports.getBalance = function (req, res) {
                 Balance: balance.balance
             });
         });
-        console.log(arr)
         res.send({
         "publicKey": publicKey,
         "assets": arr
