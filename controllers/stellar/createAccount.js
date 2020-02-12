@@ -2,11 +2,12 @@ var StellarSdk = require('stellar-sdk');
 StellarSdk.Network.useTestNetwork();
 var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-exports.createAccount = function(){
+exports.createAccount = function(req, res, next){
 
     var pair = StellarSdk.Keypair.random();
     
     pair.secret();
+    console.log(pair.secret());
     pair.publicKey();
     var request = require('request');
     request.get({
@@ -18,8 +19,11 @@ exports.createAccount = function(){
             console.error('ERROR!', error || body);
         }
         else {
+            console.log('SUCCESS! You have a new account :)\n', body);
             server.loadAccount(pair.publicKey()).then(function (account) {
+                console.log('Balances for account: ' + pair.publicKey());
                 account.balances.forEach(function (balance) {
+                    console.log('Type:', balance.asset_type, ', Balance:', balance.balance);
                 });
             });
             var issuingKeys = StellarSdk.Keypair

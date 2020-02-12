@@ -5,7 +5,7 @@ var router = express.Router();
 var User = require('../models/user');
 var createAccount = require('../controllers/stellar/createAccount');
 
-router.post('/signup', function(req, res){
+router.post('/signup', function(req, res, next){
   
   var user = new User({
     firstName: req.body.fname,
@@ -22,7 +22,7 @@ router.post('/signup', function(req, res){
     return res.status(201).json(doc);
   })
 
-  promise.catch(function(){
+  promise.catch(function(err){
     return res.status(501).json({message: 'Error registering user.'})
   })
 
