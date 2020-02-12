@@ -2,7 +2,7 @@ var StellarSdk = require('stellar-sdk');
 StellarSdk.Network.useTestNetwork();
 var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-exports.createAccount = function(req, res, next){
+exports.createAccount = function(){
 
     var pair = StellarSdk.Keypair.random();
     
